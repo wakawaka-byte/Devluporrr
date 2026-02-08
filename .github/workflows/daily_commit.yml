@@ -2,27 +2,35 @@ name: Daily Auto Commit
 
 on:
   schedule:
-    - cron: '0 0 * * *'
+    # This runs it every few minutes (GitHub's limit is usually every 5-10 mins)
+    - cron: '*/.5 * * * *' 
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # This explicitly tells GitHub the robot has permission to commit
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Make 931 commits
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          # CHANGE THE EMAIL BELOW TO YOUR GITHUB EMAIL
+          git config --local user.email "studiouschild000@gmail.com"
+          git config --local user.name "wakawaka-byte"
+          
+          # Pull latest changes to avoid the failure you saw
+          git pull --rebase origin main
+          
           for i in {1..931}
           do
-            echo "Iteration $i" > activity_log.txt
+            echo "Commit $i at $(date)" > activity_log.txt
             git add activity_log.txt
-            git commit -m "Contribution krdiii"
+            git commit -m "Contribution krdiii $i"
           done
           
-          git push
+          git push origin main
