@@ -3,7 +3,7 @@ name: Daily Auto Commit
 on:
   schedule:
     # This runs it every few minutes (GitHub's limit is usually every 5-10 mins)
-    - cron: '*/.5 * * * *' 
+    - cron: '*/1 * * * *' 
   workflow_dispatch:
 
 jobs:
