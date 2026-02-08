@@ -1,0 +1,13 @@
+- name: Make 100 commits
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          for i in {1..931}
+          do
+            echo "Commit number $i on $(date)" > activity_log.txt
+            git add activity_log.txt
+            git commit -m "chore: daily contribution $i [skip ci]"
+          done
+          
+          git push
