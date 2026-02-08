@@ -1,13 +1,28 @@
-- name: Make 100 commits
+name: Daily Auto Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # This explicitly tells GitHub the robot has permission to commit
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Make 931 commits
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          
           for i in {1..931}
           do
-            echo "Commit number $i on $(date)" > activity_log.txt
+            echo "Iteration $i" > activity_log.txt
             git add activity_log.txt
-            git commit -m "chore: daily contribution $i [skip ci]"
+            git commit -m "Contribution krdiii"
           done
           
           git push
