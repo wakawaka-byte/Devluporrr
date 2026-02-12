@@ -2,8 +2,7 @@ name: Daily Auto Commit
 
 on:
   schedule:
-    # This runs it every few minutes (GitHub's limit is usually every 5-10 mins)
-    - cron: '*/1 * * * *' 
+    - cron: '0 * * * *'   # Runs once every hour
   workflow_dispatch:
 
 jobs:
@@ -17,16 +16,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Make 931 commits
+      - name: Make 83 commits
         run: |
-          # CHANGE THE EMAIL BELOW TO YOUR GITHUB EMAIL
           git config --local user.email "studiouschild000@gmail.com"
           git config --local user.name "wakawaka-byte"
           
-          # Pull latest changes to avoid the failure you saw
           git pull --rebase origin main
           
-          for i in {1..931}
+          for i in {1..83}
           do
             echo "Commit $i at $(date)" > activity_log.txt
             git add activity_log.txt
